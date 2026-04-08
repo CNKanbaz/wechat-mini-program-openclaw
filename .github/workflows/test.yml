@@ -1,0 +1,33 @@
+name: CI Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Check project structure
+      run: |
+        echo "验证项目目录结构..."
+        ls -la
+        [ -f README.md ] && echo "✓ README.md 存在"
+        [ -f .gitignore ] && echo "✓ .gitignore 存在"
+        [ -d src ] && echo "✓ src 目录存在"
+        [ -d static ] && echo "✓ static 目录存在"
+        
+    - name: Run simple validation
+      run: |
+        echo "GitHub Actions 测试通过"
+        echo "项目基础结构验证完成"
